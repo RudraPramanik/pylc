@@ -19,3 +19,5 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 const app = express()
+
+export {app}
