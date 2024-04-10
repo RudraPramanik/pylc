@@ -1,11 +1,10 @@
 import { Router } from "express";
-import { loginUser, logoutUsr, registerUser } from "../controllers/user.controller.js";
+import { loginUser, logoutUser, registerUser, refreshAccessToken } from "../controllers/user.controller.js";
 import {upload} from "../middlewares/multer.middleware.js"
-import { verifyJwt } from "../middlewares/auth.middleware.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
+
 
 const router = Router()
-
-console.log("Uploaded files:", req.files);
 
 router.route("/register").post(
     upload.fields([
@@ -21,9 +20,10 @@ router.route("/register").post(
     registerUser
     )
 
-router.route("/login").post(loginUser)    
-//secured route
+router.route("/login").post(loginUser)
 
-router.route("/logout").post( verifyJwt, logoutUsr)
+//secured routes
+router.route("/logout").post(verifyJWT,  logoutUser)
+router.route("/refresh-token").post(refreshAccessToken)
 
 export default router
